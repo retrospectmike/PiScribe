@@ -1,7 +1,7 @@
 # PiScribe
 Make vintage MiniScribe hard drive sounds on your modern hardware
 
-For dev updates see [the TinkerDifferent thread](https://tinkerdifferent.com/threads/driving-a-miniscribe-motor-to-make-vintage-sounds.2904/#post-25010)
+For dev updates see [the TinkerDifferent thread](https://tinkerdifferent.com/threads/driving-a-miniscribe-motor-to-make-vintage-sounds.2904/#post-25010).
 
 # WARNING
 **WARNING This will probably destroy your MiniScribe's platters so don't do this on a MiniScribe that you care about!!**
