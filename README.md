@@ -38,4 +38,7 @@ You need to have all the equipment necessary to drive a bipolar stepper motor.  
 
 If you want a head-less solution you could surely make the Raspberry Pi automatically run the PiScribe.py script at startup so you don't need to kick it off manually.
 
-## Wiring diagram
+## Reference Design
+The following is a reference design for the system as per the BOM, above.
+![circuit](circuit.png)
+
