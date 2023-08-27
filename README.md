@@ -23,6 +23,7 @@ You need to have all the equipment necessary to drive a bipolar stepper motor.  
     2. To connect the power supply to the motor driver
     3. To connect some Raspberry Pi GPIO pins to the activity LED or activity signal on whatever modern drive you want to make noises for
 5.  Optional LED if you want to test/monitor when PiScribe is making hard drive sounds (useful if, say, your computer has/had an LED to indicate activity that you want to replace/use -- as was the case in my Macintosh SE
+
 ### Setup
 1. **WARNING This will probably destroy your MiniScribe's platters so don't do this on a MiniScribe that you care about!!**
 1. Disconnect power from the hard drive
@@ -42,3 +43,7 @@ If you want a head-less solution you could surely make the Raspberry Pi automati
 The following is a reference design for the system as per the BOM, above.
 ![circuit](circuit.png)
 
+## File Descriptions
+*(non-functional files omitted)*
+1. PiScribe.py - the python code for all the functionality in this repo
+1. i2cspeed.sh - a script to check your current Raspberry Pi's i2c communication speed setting
