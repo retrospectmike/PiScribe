@@ -4,14 +4,13 @@ from adafruit_motorkit import MotorKit
 from adafruit_motor import stepper	
 import RPi.GPIO as GPIO
 
-## FINDINGS ##
-# Little steps = interleave @ sleep 0.1
-#
-#Formatting sound inerleave @ sleep 0.2
-#
-#
-#
-
+## Sound functions ##
+# MakeNoise is the basic noise function.  Almost all higher functions just
+  # call MakeNoise with different parameters
+  # MakeNoise always starts and ends the motor at the same position so
+  # that you don't end up running against a drive's head stop HOWEVER since
+  # motors can sometimes slip, skip, or stall, there is **NO GUARANTEE** that 
+  # this will forever keep the motor from making its way to a different spot.
 def MakeNoise(targIters=5,styles=[stepper.INTERLEAVE],step_sleep=0.01):
 	kit = MotorKit()
 	steps=0
@@ -75,21 +74,25 @@ def MakeNoise(targIters=5,styles=[stepper.INTERLEAVE],step_sleep=0.01):
 			direction=stepper.BACKWARD,
 			style=thisStyle)
 	kit.stepper2.release()
-
+# FloppyReadByBeeps sounds like an old Macintosh floppy drive reading, unused.
 def FloppyReadByBeeps(numBeeps=1):
 	MakeNoise(targIters=numBeeps/2,styles=[stepper.INTERLEAVE],step_sleep=0.4)
-
+# FloppyWriteByBeeps sounds like an old Macintosh floppy drive writing, unused.
 def FloppyWriteByBeeps(numBeeps=1):
 	MakeNoise(targIters=numBeeps/2,styles=[stepper.INTERLEAVE],step_sleep=0.01)
 
+#Unused, but provides an interface to command a # of beeps
 def HDReadByBeeps(numBeeps=1):
-	
 	sleepTimes=[0.025,0.01,0.05,.1]
 	#MakeNoise(targIters=numBeeps/2,styles=[stepper.INTERLEAVE],step_sleep=0.3)
 	MakeNoise(targIters=numBeeps/2,styles=[stepper.INTERLEAVE],
 		step_sleep=random.choice(sleepTimes))
+#HDSeek mimics hard drive seeking noises.  
+#  targIters determines how many seek noises it makes (i.e. how long the sounds last)
 def HDSeek(targIters=13):
 	MakeNoise(targIters=targIters,styles=[stepper.MICROSTEP],step_sleep=0.00001)
+#HDRead mimics hard drive reading noises.
+#  numReads dictates how many read noises it makes (i.e. how long the sounds last)
 def HDRead(numReads=1):
 	seekTimes=[1,4,8,8,8,20,20,20,20,8,20,20,20,20]
 	readBeeps=[1,1,2,4,2,4,2,4,2,4]
@@ -102,6 +105,8 @@ def HDRead(numReads=1):
 		HDSeek(targIters=seeks)
 		HDReadByBeeps(beeps)
 		time.sleep(sleeps)
+		
+#HDStartup mimics the MiniScribe's startup noises
 def HDStartup():
 	kit = MotorKit()
 	i=0
@@ -154,6 +159,7 @@ def HDStartup():
 		
 	kit.stepper2.release()
 
+## Main initializes the GPIO and loops listening to the activity input pin
 def main():
 	GPIO.setwarnings(True)
 	GPIO.setmode(GPIO.BCM)
@@ -168,13 +174,13 @@ def main():
 	
 	ActivityState = GPIO.input(GPIO_to_BlueSCSI_Pin)
 	
-	print("Blank screen...")
+	print("Hard drive startup sounds...")
 	time.sleep(1)
 	HDStartup()
 	time.sleep(4)
-	print("Welcome to Macintosh")
+	print("Welcome to PiScribe")
 
-	while True:
+	while True: #Track state and only print statements when there's a change
 		if ActivityState != GPIO.input(GPIO_to_BlueSCSI_Pin):
 			ActivityState = GPIO.input(GPIO_to_BlueSCSI_Pin)
 			if ActivityState:
@@ -183,7 +189,7 @@ def main():
 			else:
 				print("Activity!...")
 				print(ActivityState)
-		if 0==ActivityState:
+		if 0==ActivityState: #(active low)
 			GPIO.output(GPIO_testLED,0)
 			HDRead(1)
 			GPIO.output(GPIO_testLED,1)
@@ -192,14 +198,6 @@ def main():
 		time.sleep(.0000002)
 
 	
-
+#Run main if called directly
 if __name__=="__main__":
 	main()
-#blue to orange (+) = 1.3V const
-#blue to grn = 0V const
-#blue to wht (+) = 5.0V @ zero pos, 0V otherwise
-#wht to orng (+) = -3.78V @ zero pos, +1.30V otherwise
-#wht to grn (+) = -5V @zero, 0V otherwise
-#wht to blue (+) = -5V @zero, 0V otherwise
-#grn to orng (+) = +1.35V const
-#orng to 
