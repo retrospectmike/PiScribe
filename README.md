@@ -1,6 +1,8 @@
 # PiScribe
 Make vintage MiniScribe hard drive sounds on your modern hardware
 
+https://github.com/retrospectmike/PiScribe/assets/69996986/0ae462bd-ffd0-4db0-8803-918bdfb02c6b
+
 For dev updates see [the TinkerDifferent thread](https://tinkerdifferent.com/threads/driving-a-miniscribe-motor-to-make-vintage-sounds.2904/#post-25010).
 
 # WARNING
